@@ -1,0 +1,38 @@
+[2017-02-28 17:10:17,359][DEBUG ][main                     ][org.ldp4j.tutorial.client.CachedRepresentationManager                           ] Created cache directory /home/bakerally/Documents/repositories/github/eswc2015-tutorial/client/.cache
+[2017-02-28 17:10:24,587][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> GET /contacts/ldp4j/api/persons/ HTTP/1.1
+[2017-02-28 17:10:24,588][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> Accept: text/turtle; charset=utf-8
+[2017-02-28 17:10:24,588][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> Host: localhost
+[2017-02-28 17:10:24,588][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> Connection: Keep-Alive
+[2017-02-28 17:10:24,588][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> User-Agent: Apache-HttpClient/4.4.1 (Java/1.7.0_80)
+[2017-02-28 17:10:24,588][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 >> Accept-Encoding: gzip,deflate
+[2017-02-28 17:10:24,590][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << HTTP/1.1 404 Not Found
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Date: Tue, 28 Feb 2017 16:10:24 GMT
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Server: Apache/2.4.7 (Ubuntu)
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Content-Length: 299
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Keep-Alive: timeout=5, max=100
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Connection: Keep-Alive
+[2017-02-28 17:10:24,591][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-0 << Content-Type: text/html; charset=iso-8859-1
+[2017-02-28 17:10:37,578][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> GET /contacts/ldp4j/api/persons/ HTTP/1.1
+[2017-02-28 17:10:37,578][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> Accept: text/turtle; charset=utf-8
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> Host: localhost
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> Connection: Keep-Alive
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> User-Agent: Apache-HttpClient/4.4.1 (Java/1.7.0_80)
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 >> Accept-Encoding: gzip,deflate
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << HTTP/1.1 404 Not Found
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Date: Tue, 28 Feb 2017 16:10:37 GMT
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Server: Apache/2.4.7 (Ubuntu)
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Content-Length: 299
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Keep-Alive: timeout=5, max=100
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Connection: Keep-Alive
+[2017-02-28 17:10:37,579][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-1 << Content-Type: text/html; charset=iso-8859-1
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> GET /contacts/ldp4j/api/persons/ HTTP/1.1
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> Accept: text/turtle; charset=utf-8
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> Host: localhost:8080
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> Connection: Keep-Alive
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> User-Agent: Apache-HttpClient/4.4.1 (Java/1.7.0_80)
+[2017-02-28 17:10:51,835][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 >> Accept-Encoding: gzip,deflate
+[2017-02-28 17:10:51,838][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 << HTTP/1.1 404 Not Found
+[2017-02-28 17:10:51,838][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 << Date: Tue, 28 Feb 2017 16:10:51 GMT
+[2017-02-28 17:10:51,838][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 << Content-Type: text/html; charset=ISO-8859-1
+[2017-02-28 17:10:51,838][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 << Content-Length: 47
+[2017-02-28 17:10:51,838][DEBUG ][main                     ][org.apache.http.headers                                                         ] http-outgoing-2 << Server: Jetty(9.2.7.v20150116)
