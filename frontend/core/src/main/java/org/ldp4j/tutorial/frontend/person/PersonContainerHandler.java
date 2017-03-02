@@ -26,9 +26,7 @@
  */
 package org.ldp4j.tutorial.frontend.person;
 
-import org.ldp4j.application.data.DataSet;
-import org.ldp4j.application.data.DataSetFactory;
-import org.ldp4j.application.data.Individual;
+import org.ldp4j.application.data.*;
 import org.ldp4j.application.ext.ApplicationRuntimeException;
 import org.ldp4j.application.ext.ContainerHandler;
 import org.ldp4j.application.ext.UnknownResourceException;
@@ -45,6 +43,10 @@ import org.ldp4j.tutorial.frontend.util.FormatUtil;
 import org.ldp4j.tutorial.frontend.util.IdentityUtil;
 import org.ldp4j.tutorial.frontend.util.Serviceable;
 import org.ldp4j.tutorial.frontend.util.Typed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URI;
 
 @BasicContainer(
 	id = PersonContainerHandler.ID,
@@ -53,17 +55,32 @@ import org.ldp4j.tutorial.frontend.util.Typed;
 public class PersonContainerHandler extends Serviceable implements ContainerHandler {
 
 	public static final String ID="PersonContainerHandler";
+	private static final Logger LOGGER= LoggerFactory.getLogger(PersonContainerHandler.class);
 
 	public PersonContainerHandler(ContactsService service) {
 		super(service);
 	}
 
+	private static void addObjectPropertyValue(DataSet dataSet, Name<String> name, String propertyURI, String uri) {
+		if(uri==null) {
+			return;
+		}
+		ManagedIndividualId individualId = ManagedIndividualId.createId(name, PersonHandler.ID);
+		ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
+		URI propertyId = URI.create(propertyURI);
+		ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
+		individual.addValue(propertyId,external);
+	}
+
 	@Override
 	public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
 		// For the time there is nothing to return
+		LOGGER.info("Enters PersonContainerHandler get======================"+resource.name()+" test");
+
 		return
 			DataSetFactory.
 				createDataSet(resource.name());
+
 	}
 
 	@Override
@@ -75,6 +92,7 @@ public class PersonContainerHandler extends Serviceable implements ContainerHand
 						UnknownResourceException,
 						ApplicationRuntimeException,
 						UnsupportedContentException {
+		LOGGER.info("Enters PersonContainerHandler create======================");
 		trace("Requested person creation: %n%s",representation);
 
 		Individual<?, ?> individual=

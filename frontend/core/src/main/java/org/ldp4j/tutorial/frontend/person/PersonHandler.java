@@ -50,6 +50,8 @@ import org.ldp4j.tutorial.frontend.util.FormatUtil;
 import org.ldp4j.tutorial.frontend.util.IdentityUtil;
 import org.ldp4j.tutorial.frontend.util.Serviceable;
 import org.ldp4j.tutorial.frontend.util.Typed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Resource(
 	id=PersonHandler.ID,
@@ -64,12 +66,13 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 
 	public static final String ID="PersonHandler";
 	public static final String PERSON_CONTACTS="personContacts";
-
+	private static final Logger LOGGER= LoggerFactory.getLogger(PersonHandler.class);
 	public PersonHandler(ContactsService service) {
 		super(service);
 	}
 
 	private Person findPerson(String personId) throws UnknownResourceException {
+		LOGGER.info("Enters PersonHandler findPerson ======================");
 		Person person = contactsService().getPerson(personId);
 		if(person==null) {
 			throw unknownResource(personId,"Person");
@@ -79,6 +82,7 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 
 	@Override
 	public DataSet get(ResourceSnapshot resource) throws UnknownResourceException {
+		LOGGER.info("Enters PersonHandler get ======================"+resource);
 		String personId = IdentityUtil.personId(resource);
 		trace("Requested person %s retrieval...",personId);
 		Person person = findPerson(personId);
@@ -88,6 +92,7 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 
 	@Override
 	public void delete(ResourceSnapshot resource, WriteSession session) throws UnknownResourceException, ApplicationRuntimeException {
+		LOGGER.info("Enters PersonHandler delete ======================");
 		String personId = IdentityUtil.personId(resource);
 		trace("Requested person %s deletion...",personId);
 		Person person=findPerson(personId);
@@ -116,6 +121,7 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 						UnsupportedContentException,
 						InconsistentContentException,
 						ApplicationRuntimeException {
+		LOGGER.info("Enters PersonHandler update ======================");
 		String personId = IdentityUtil.personId(resource);
 		trace("Requested person %s update using: %n%s",personId,content);
 

@@ -37,6 +37,8 @@ import org.ldp4j.application.setup.Environment;
 import org.ldp4j.tutorial.application.api.ContactsService;
 import org.ldp4j.tutorial.frontend.contact.ContactContainerHandler;
 import org.ldp4j.tutorial.frontend.contact.ContactHandler;
+import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
+import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
 import org.ldp4j.tutorial.frontend.person.PersonContainerHandler;
 import org.ldp4j.tutorial.frontend.person.PersonHandler;
 import org.slf4j.Logger;
@@ -46,17 +48,33 @@ public final class ContactsApplication extends Application<Configuration> {
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(ContactsApplication.class);
 
+
+
+	//Parking
+	private static final String PARKING_CONTAINER_NAME     = "ParkingContainer";
+	private static final String ROOT_PARKING_CONTAINER_PATH= "parkings/";
+	private Name<String> parkingContainerName;
+
+	//Person
 	private static final String PERSON_CONTAINER_NAME     = "PersonContainer";
-
 	private static final String ROOT_PERSON_CONTAINER_PATH= "persons/";
+	private Name<String> personContainerName;
 
-	private final Name<String> personContainerName;
 
 	public ContactsApplication() {
-		this.personContainerName=
+
+		this.parkingContainerName=
 			NamingScheme.
 				getDefault().
-					name(PERSON_CONTAINER_NAME);
+					name(PARKING_CONTAINER_NAME);
+
+
+
+		this.personContainerName=
+				NamingScheme.
+						getDefault().
+						name(PERSON_CONTAINER_NAME);
+
 	}
 
 	@Override
@@ -69,12 +87,15 @@ public final class ContactsApplication extends Application<Configuration> {
 		bootstrap.addHandler(new PersonHandler(service));
 		bootstrap.addHandler(new ContactContainerHandler(service));
 		bootstrap.addHandler(new ContactHandler(service));
+		bootstrap.addHandler(new ParkingContainerHandler());
+		bootstrap.addHandler(new ParkingHandler());
 
-		environment.
-			publishResource(
-				this.personContainerName,
-				PersonContainerHandler.class,
-				ROOT_PERSON_CONTAINER_PATH);
+		//Parking
+		environment.publishResource(this.parkingContainerName,ParkingContainerHandler.class,ROOT_PARKING_CONTAINER_PATH);
+
+		//Person
+		environment.publishResource(this.personContainerName,PersonContainerHandler.class,ROOT_PERSON_CONTAINER_PATH);
+
 
 		LOGGER.info("Contacts Application configuration completed.");
 	}

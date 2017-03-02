@@ -1,0 +1,8 @@
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+@base <http://localhost:8080/contacts/ldp4j/api/persons/> .
+
+<>
+	rdf:type ldp:Container, ldp:RDFSource, ldp:Resource ;
+	ldp:contains <1/> .
