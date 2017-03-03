@@ -30,6 +30,8 @@ import org.ldp4j.application.data.Name;
 import org.ldp4j.application.data.NamingScheme;
 import org.ldp4j.application.ext.Application;
 import org.ldp4j.application.ext.Configuration;
+import org.ldp4j.application.session.ContainerSnapshot;
+import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.application.session.WriteSession;
 import org.ldp4j.application.session.WriteSessionException;
 import org.ldp4j.application.setup.Bootstrap;
@@ -43,6 +45,8 @@ import org.ldp4j.tutorial.frontend.person.PersonContainerHandler;
 import org.ldp4j.tutorial.frontend.person.PersonHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 public final class ContactsApplication extends Application<Configuration> {
 
@@ -104,6 +108,26 @@ public final class ContactsApplication extends Application<Configuration> {
 	public void initialize(WriteSession session) {
 		LOGGER.info("Initializing Contacts Application...");
 		try {
+
+
+			ContainerSnapshot containerSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.parkingContainerName,ParkingContainerHandler.class);
+
+			
+			Name <String> resource = NamingScheme.builder().withBase("http://www.google.com")
+					.build().name("test");
+			
+
+
+			Name <String> resource1 = NamingScheme.builder().withBase("http://www.google.com")
+					.build().name("test2");
+
+			containerSnapshot.addMember(resource);
+			containerSnapshot.addMember(resource1);
+
+
+
+
+
 			session.saveChanges();
 			LOGGER.info("Contacts Application initialization completed.");
 		} catch (WriteSessionException e) {
