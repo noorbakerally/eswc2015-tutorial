@@ -115,7 +115,7 @@ public final class ContactsApplication extends Application<Configuration> {
 			
 			Name <String> resource = NamingScheme.builder().withBase("http://www.google.com")
 					.build().name("test");
-			
+
 
 
 			Name <String> resource1 = NamingScheme.builder().withBase("http://www.google.com")
