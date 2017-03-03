@@ -30,54 +30,19 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.io.Serializable;
 
-import org.ldp4j.application.data.DataSet;
-import org.ldp4j.application.data.DataSetUtils;
-import org.ldp4j.application.data.Individual;
-import org.ldp4j.application.data.ManagedIndividual;
-import org.ldp4j.application.data.ManagedIndividualId;
 import org.ldp4j.application.data.Name;
 import org.ldp4j.application.data.NamingScheme;
 import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.tutorial.application.api.Contact;
 import org.ldp4j.tutorial.application.api.Person;
-import org.ldp4j.tutorial.frontend.contact.ContactHandler;
-import org.ldp4j.tutorial.frontend.contact.ContactId;
-import org.ldp4j.tutorial.frontend.person.PersonHandler;
 
 public final class IdentityUtil {
 
 	private IdentityUtil() {
 	}
 
-	public static Individual<?, ?> personIndividual(DataSet content, Person person) {
-		Individual<?,?> result=null;
-		if(person!=null) {
-			ManagedIndividualId id=
-				ManagedIndividualId.
-					createId(
-						name(person),
-						PersonHandler.ID);
-			result=content.individual(id,ManagedIndividual.class);
-		} else {
-			result=DataSetUtils.newHelper(content).self();
-		}
-		return result;
-	}
 
-	public static Individual<?, ?> contactIndividual(DataSet content, Contact contact) {
-		Individual<?,?> result=null;
-		if(contact!=null) {
-			ManagedIndividualId id=
-				ManagedIndividualId.
-					createId(
-						name(contact),
-						ContactHandler.ID);
-			result=content.individual(id,ManagedIndividual.class);
-		} else {
-			result=DataSetUtils.newHelper(content).self();
-		}
-		return result;
-	}
+
 
 	public static String personId(ResourceSnapshot resource) {
 		Serializable id = resource.name().id();
@@ -85,17 +50,7 @@ public final class IdentityUtil {
 		return (String)id;
 	}
 
-	public static ContactId contactId(ResourceSnapshot resource) {
-		Serializable contactId = resource.name().id();
-		checkState(contactId instanceof String,"Contact identifier should be a string not a %s",contactId.getClass().getCanonicalName());
-		ResourceSnapshot contactsResource = resource.parent();
-		checkState(contactsResource!=null,"Could not find contact's parent resource");
-		ResourceSnapshot personResource = contactsResource.parent();
-		checkState(personResource!=null,"Could not find contact's related person resource");
-		Serializable personId = personResource.name().id();
-		checkState(personId instanceof String,"Person identifier should be a string not a %s",personId.getClass().getCanonicalName());
-		return ContactId.create((String)personId,(String)contactId);
-	}
+
 
 	public static Name<String> name(Contact contact, String... subKeys) {
 		return NamingScheme.getDefault().name(contact.getEmail(),subKeys);

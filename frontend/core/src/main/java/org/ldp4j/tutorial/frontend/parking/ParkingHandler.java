@@ -32,7 +32,6 @@ import org.ldp4j.application.ext.ResourceHandler;
 import org.ldp4j.application.ext.UnknownResourceException;
 import org.ldp4j.application.ext.annotations.Resource;
 import org.ldp4j.application.session.ResourceSnapshot;
-import org.ldp4j.tutorial.frontend.contact.ContactHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

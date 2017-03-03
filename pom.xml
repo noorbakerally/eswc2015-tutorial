@@ -59,9 +59,7 @@
 	<!-- =================================================================== -->
 
 	<modules>
-		<module>application</module>
 		<module>frontend</module>
-		<module>client</module>
 	</modules>
 
 

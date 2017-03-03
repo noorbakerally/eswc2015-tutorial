@@ -36,8 +36,6 @@ import org.ldp4j.application.ext.annotations.BasicContainer;
 import org.ldp4j.application.session.ContainerSnapshot;
 import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.application.session.WriteSession;
-import org.ldp4j.tutorial.frontend.person.PersonContainerHandler;
-import org.ldp4j.tutorial.frontend.person.PersonHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

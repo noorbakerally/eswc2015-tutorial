@@ -37,12 +37,8 @@ import org.ldp4j.application.session.WriteSessionException;
 import org.ldp4j.application.setup.Bootstrap;
 import org.ldp4j.application.setup.Environment;
 import org.ldp4j.tutorial.application.api.ContactsService;
-import org.ldp4j.tutorial.frontend.contact.ContactContainerHandler;
-import org.ldp4j.tutorial.frontend.contact.ContactHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
-import org.ldp4j.tutorial.frontend.person.PersonContainerHandler;
-import org.ldp4j.tutorial.frontend.person.PersonHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,19 +82,12 @@ public final class ContactsApplication extends Application<Configuration> {
 		LOGGER.info("Starting Contacts Application configuration...");
 
 		ContactsService service = ContactsService.getInstance();
-
-		bootstrap.addHandler(new PersonContainerHandler(service));
-		bootstrap.addHandler(new PersonHandler(service));
-		bootstrap.addHandler(new ContactContainerHandler(service));
-		bootstrap.addHandler(new ContactHandler(service));
 		bootstrap.addHandler(new ParkingContainerHandler());
 		bootstrap.addHandler(new ParkingHandler());
 
 		//Parking
 		environment.publishResource(this.parkingContainerName,ParkingContainerHandler.class,ROOT_PARKING_CONTAINER_PATH);
 
-		//Person
-		environment.publishResource(this.personContainerName,PersonContainerHandler.class,ROOT_PERSON_CONTAINER_PATH);
 
 
 		LOGGER.info("Contacts Application configuration completed.");
