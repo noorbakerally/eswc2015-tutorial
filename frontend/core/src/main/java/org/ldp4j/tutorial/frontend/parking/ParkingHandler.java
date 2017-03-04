@@ -48,6 +48,8 @@ public class ParkingHandler implements ResourceHandler {
     @Override
     public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
         LOGGER.info("Enters ParkingHandler get ======================"+resource);
+
+        
         return null;
     }
 }

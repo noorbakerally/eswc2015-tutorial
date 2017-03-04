@@ -48,17 +48,10 @@ public final class ContactsApplication extends Application<Configuration> {
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(ContactsApplication.class);
 
-
-
 	//Parking
 	private static final String PARKING_CONTAINER_NAME     = "ParkingContainer";
 	private static final String ROOT_PARKING_CONTAINER_PATH= "parkings/";
 	private Name<String> parkingContainerName;
-
-	//Person
-	private static final String PERSON_CONTAINER_NAME     = "PersonContainer";
-	private static final String ROOT_PERSON_CONTAINER_PATH= "persons/";
-	private Name<String> personContainerName;
 
 
 	public ContactsApplication() {
@@ -68,20 +61,12 @@ public final class ContactsApplication extends Application<Configuration> {
 				getDefault().
 					name(PARKING_CONTAINER_NAME);
 
-
-
-		this.personContainerName=
-				NamingScheme.
-						getDefault().
-						name(PERSON_CONTAINER_NAME);
-
 	}
 
 	@Override
 	public void setup(Environment environment, Bootstrap<Configuration> bootstrap) {
-		LOGGER.info("Starting Contacts Application configuration...");
+		LOGGER.info("Starting Application configuration...");
 
-		ContactsService service = ContactsService.getInstance();
 		bootstrap.addHandler(new ParkingContainerHandler());
 		bootstrap.addHandler(new ParkingHandler());
 
@@ -90,12 +75,12 @@ public final class ContactsApplication extends Application<Configuration> {
 
 
 
-		LOGGER.info("Contacts Application configuration completed.");
+		LOGGER.info("Application configuration completed.");
 	}
 
 	@Override
 	public void initialize(WriteSession session) {
-		LOGGER.info("Initializing Contacts Application...");
+		LOGGER.info("Initializing Application...");
 		try {
 
 
@@ -118,17 +103,17 @@ public final class ContactsApplication extends Application<Configuration> {
 
 
 			session.saveChanges();
-			LOGGER.info("Contacts Application initialization completed.");
+			LOGGER.info("Application initialization completed.");
 		} catch (WriteSessionException e) {
-			LOGGER.warn("Contacts Application initialization failed.",e);
+			LOGGER.warn("Application initialization failed.",e);
 			throw new IllegalStateException(e);
 		}
 	}
 
 	@Override
 	public void shutdown() {
-		LOGGER.info("Starting Contacts Application shutdown...");
-		LOGGER.info("Contacts Application shutdown completed.");
+		LOGGER.info("Starting Application shutdown...");
+		LOGGER.info("Application shutdown completed.");
 	}
 
 }
