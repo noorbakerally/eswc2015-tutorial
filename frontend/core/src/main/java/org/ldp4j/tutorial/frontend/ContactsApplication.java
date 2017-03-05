@@ -26,8 +26,7 @@
  */
 package org.ldp4j.tutorial.frontend;
 
-import org.ldp4j.application.data.Name;
-import org.ldp4j.application.data.NamingScheme;
+import org.ldp4j.application.data.*;
 import org.ldp4j.application.ext.Application;
 import org.ldp4j.application.ext.Configuration;
 import org.ldp4j.application.session.ContainerSnapshot;
@@ -36,13 +35,15 @@ import org.ldp4j.application.session.WriteSession;
 import org.ldp4j.application.session.WriteSessionException;
 import org.ldp4j.application.setup.Bootstrap;
 import org.ldp4j.application.setup.Environment;
-import org.ldp4j.tutorial.application.api.ContactsService;
+import org.ldp4j.tutorial.frontend.parking.Parking;
 import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import static org.ldp4j.application.data.IndividualReferenceBuilder.newReference;
 import java.awt.*;
+import java.net.URI;
+import java.util.Date;
 
 public final class ContactsApplication extends Application<Configuration> {
 
@@ -84,19 +85,15 @@ public final class ContactsApplication extends Application<Configuration> {
 		try {
 
 
+			Parking p1 = new Parking();
+			Name <String> parkingName = NamingScheme.getDefault().name(p1.getName());
+			p1.setName("newParking");
+
 			ContainerSnapshot containerSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.parkingContainerName,ParkingContainerHandler.class);
-
-			
-			Name <String> resource = NamingScheme.builder().withBase("http://www.google.com")
-					.build().name("test");
+			ResourceSnapshot parkingSnapshot = containerSnapshot.addMember(parkingName);
 
 
 
-			Name <String> resource1 = NamingScheme.builder().withBase("http://www.google.com")
-					.build().name("test2");
-
-			containerSnapshot.addMember(resource);
-			containerSnapshot.addMember(resource1);
 
 
 

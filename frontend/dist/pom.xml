@@ -21,8 +21,8 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      Artifact    : org.ldp4j.tutorial.frontend:eswc-2015-frontend:1.0.0-SNAPSHOT
-      Bundle      : eswc-2015-frontend-1.0.0-SNAPSHOT.pom
+      Artifact    : org.ldp4j.tutorial.frontend:frontend-dist:1.0.0-SNAPSHOT
+      Bundle      : frontend-dist-1.0.0-SNAPSHOT.war
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 
 -->
@@ -59,7 +59,7 @@
 	<!-- =================================================================== -->
 
 	<properties>
-		<ldp4j.version>0.1.0</ldp4j.version>
+		<ldp4j.version>1.0.0-SNAPSHOT</ldp4j.version>
 		<frontend.http.port>80</frontend.http.port>
 	</properties>
 
