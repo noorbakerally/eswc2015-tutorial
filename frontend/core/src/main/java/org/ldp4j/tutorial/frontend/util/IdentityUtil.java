@@ -33,31 +33,15 @@ import java.io.Serializable;
 import org.ldp4j.application.data.Name;
 import org.ldp4j.application.data.NamingScheme;
 import org.ldp4j.application.session.ResourceSnapshot;
-import org.ldp4j.tutorial.application.api.Contact;
-import org.ldp4j.tutorial.application.api.Person;
+
 
 public final class IdentityUtil {
 
 	private IdentityUtil() {
 	}
-
-
-
-
 	public static String personId(ResourceSnapshot resource) {
 		Serializable id = resource.name().id();
 		checkState(id instanceof String,"Person identifier should be a string not a %s",id.getClass().getCanonicalName());
 		return (String)id;
 	}
-
-
-
-	public static Name<String> name(Contact contact, String... subKeys) {
-		return NamingScheme.getDefault().name(contact.getEmail(),subKeys);
-	}
-
-	public static Name<String> name(Person person, String... subKeys) {
-		return NamingScheme.getDefault().name(person.getEmail(),subKeys);
-	}
-
 }

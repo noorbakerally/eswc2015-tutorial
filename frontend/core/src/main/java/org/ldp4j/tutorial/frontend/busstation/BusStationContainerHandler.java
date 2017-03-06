@@ -37,7 +37,6 @@ import org.ldp4j.application.session.ContainerSnapshot;
 import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.application.session.WriteSession;
 import org.ldp4j.tutorial.frontend.generic.GenericHandler;
-import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

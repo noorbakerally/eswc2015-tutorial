@@ -75,11 +75,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.ldp4j.tutorial.application</groupId>
-			<artifactId>application-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.ldp4j.framework</groupId>
 			<artifactId>ldp4j-application-api</artifactId>
 		</dependency>
@@ -90,12 +85,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.ldp4j.tutorial.application</groupId>
-			<artifactId>application-core</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

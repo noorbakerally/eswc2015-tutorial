@@ -34,8 +34,6 @@ import org.ldp4j.application.data.Literal;
 import org.ldp4j.application.data.ManagedIndividualId;
 import org.ldp4j.application.data.Value;
 import org.ldp4j.application.data.ValueVisitor;
-import org.ldp4j.tutorial.application.api.Contact;
-import org.ldp4j.tutorial.application.api.Person;
 
 import com.google.common.base.Objects;
 
@@ -64,29 +62,4 @@ public final class FormatUtil {
 		);
 		return result.get();
 	}
-
-	public static String toString(Contact contact) {
-		return
-			Objects.
-				toStringHelper(Contact.class).
-					omitNullValues().
-						add("fullName",contact.getFullName()).
-						add("email",contact.getEmail()).
-						add("telephone",contact.getTelephone()).
-						add("url",contact.getUrl()).
-						toString();
-	}
-
-	public static String toString(Person contact) {
-		return
-			Objects.
-				toStringHelper(Person.class).
-					omitNullValues().
-						add("name",contact.getName()).
-						add("email",contact.getEmail()).
-						add("location",contact.getLocation()).
-						add("workplaceHomepage",contact.getWorkplaceHomepage()).
-						toString();
-	}
-
 }
