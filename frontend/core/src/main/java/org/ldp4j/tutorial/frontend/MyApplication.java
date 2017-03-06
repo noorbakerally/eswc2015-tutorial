@@ -45,9 +45,9 @@ import java.awt.*;
 import java.net.URI;
 import java.util.Date;
 
-public final class ContactsApplication extends Application<Configuration> {
+public final class MyApplication extends Application<Configuration> {
 
-	private static final Logger LOGGER=LoggerFactory.getLogger(ContactsApplication.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(MyApplication.class);
 
 	//Parking
 	private static final String PARKING_CONTAINER_NAME     = "ParkingContainer";
@@ -55,7 +55,7 @@ public final class ContactsApplication extends Application<Configuration> {
 	private Name<String> parkingContainerName;
 
 
-	public ContactsApplication() {
+	public MyApplication() {
 
 		this.parkingContainerName=
 			NamingScheme.
