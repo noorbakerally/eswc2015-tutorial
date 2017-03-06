@@ -106,16 +106,7 @@ final class PersonMapper implements PersonVocabulary {
 						withLiteral(rawValue);
 	}
 
-	private static void addObjectPropertyValue(DataSet dataSet, Name<String> name, String propertyURI, String uri) {
-		if(uri==null) {
-			return;
-		}
-		ManagedIndividualId individualId = ManagedIndividualId.createId(name, PersonHandler.ID);
-		ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
-		URI propertyId = URI.create(propertyURI);
-		ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
-		individual.addValue(propertyId,external);
-	}
+
 
 	private static <T> T firstLiteralValue(Individual<?, ?> self, String propertyURI, final Class<? extends T> clazz) {
 		return
@@ -132,7 +123,16 @@ final class PersonMapper implements PersonVocabulary {
 					property(propertyURI).
 						firstIndividual(ExternalIndividual.class);
 	}
-
+	private static void addObjectPropertyValue(DataSet dataSet, Name<String> name, String propertyURI, String uri) {
+		if(uri==null) {
+			return;
+		}
+		ManagedIndividualId individualId = ManagedIndividualId.createId(name, PersonHandler.ID);
+		ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
+		URI propertyId = URI.create(propertyURI);
+		ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
+		individual.addValue(propertyId,external);
+	}
 	static DataSet toDataSet(Person person) {
 		Name<String> personName=IdentityUtil.name(person);
 

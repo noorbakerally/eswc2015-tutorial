@@ -101,7 +101,7 @@ public class PersonContainerHandler extends Serviceable implements ContainerHand
 
 		Typed<Person> typedPerson=PersonMapper.toPerson(individual);
 
-		PersonConstraints.validate(typedPerson);
+		//PersonConstraints.validate(typedPerson);
 
 		Person protoPerson=typedPerson.get();
 		Person person=
@@ -114,20 +114,23 @@ public class PersonContainerHandler extends Serviceable implements ContainerHand
 
 		try {
 			ResourceSnapshot personResource=
-				container.addMember(IdentityUtil.name(person));
+				container.addMember(NamingScheme.getDefault().name("mailto:mesteban@fi.upm.es"));
+
 			personResource.
 				createAttachedResource(
 					ContainerSnapshot.class,
 					PersonHandler.PERSON_CONTACTS,
-					IdentityUtil.name(person,"contacts"),
+						NamingScheme.getDefault().name("mailto:mesteban@fi.upm.es","contacts"),
 					ContactContainerHandler.class);
+
 			session.saveChanges();
+
 			info("Created person %s : %s",person.getEmail(),FormatUtil.toString(person));
 			return personResource;
 		} catch (WriteSessionException e) {
-			contactsService().
-				deletePerson(person.getEmail());
-			throw unexpectedFailure(e,"Could not create person %s",FormatUtil.toString(person));
+			/*contactsService().
+				deletePerson(person.getEmail());*/
+			throw unexpectedFailure(e,"Could not create person %s");
 		}
 	}
 

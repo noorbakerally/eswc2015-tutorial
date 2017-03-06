@@ -26,10 +26,10 @@
  */
 package org.ldp4j.tutorial.frontend.person;
 
+import java.net.URI;
 import java.util.Collection;
 
-import org.ldp4j.application.data.DataSet;
-import org.ldp4j.application.data.Individual;
+import org.ldp4j.application.data.*;
 import org.ldp4j.application.ext.ApplicationRuntimeException;
 import org.ldp4j.application.ext.Deletable;
 import org.ldp4j.application.ext.InconsistentContentException;
@@ -67,6 +67,19 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 	public static final String ID="PersonHandler";
 	public static final String PERSON_CONTACTS="personContacts";
 	private static final Logger LOGGER= LoggerFactory.getLogger(PersonHandler.class);
+
+
+	//test
+	static final String TYPE               = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+
+	static final String PERSON             = "http://xmlns.com/foaf/0.1/Person";
+
+	static final String WORKPLACE_HOMEPAGE = "http://xmlns.com/foaf/0.1/workplaceHomepage";
+	static final String LOCATION           = "http://xmlns.com/foaf/0.1/based_near";
+	static final String NAME               = "http://xmlns.com/foaf/0.1/name";
+	static final String EMAIL              = "http://xmlns.com/foaf/0.1/mbox";
+
+
 	public PersonHandler(ContactsService service) {
 		super(service);
 	}
@@ -80,14 +93,48 @@ public class PersonHandler extends Serviceable implements ResourceHandler, Modif
 		return person;
 	}
 
+	private static void addObjectPropertyValue(DataSet dataSet, Name<String> name, String propertyURI, String uri) {
+		if(uri==null) {
+			return;
+		}
+		ManagedIndividualId individualId = ManagedIndividualId.createId(name, PersonHandler.ID);
+		ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
+		URI propertyId = URI.create(propertyURI);
+		ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
+		individual.addValue(propertyId,external);
+	}
+	private static void addDatatypePropertyValue(DataSet dataSet, Name<String> name, String propertyURI, Object rawValue) {
+		DataSetUtils.
+				newHelper(dataSet).
+				managedIndividual(name, PersonHandler.ID).
+				property(propertyURI).
+				withLiteral(rawValue);
+	}
 	@Override
 	public DataSet get(ResourceSnapshot resource) throws UnknownResourceException {
 		LOGGER.info("Enters PersonHandler get ======================"+resource);
-		String personId = IdentityUtil.personId(resource);
-		trace("Requested person %s retrieval...",personId);
+		String personId = resource.name().toString();
+
+		//trace("Requested person %s retrieval...",personId);
+
 		Person person = findPerson(personId);
-		info("Retrieved person %s: %s",personId,FormatUtil.toString(person));
-		return PersonMapper.toDataSet(person);
+		person.setName("Noorani");
+
+		//info("Retrieved person %s: %s",personId,FormatUtil.toString(person));
+
+		//testing
+		Name<String> personName=IdentityUtil.name(person);
+		DataSet dataSet = DataSetFactory.createDataSet(personName);
+		addObjectPropertyValue(dataSet,personName,TYPE,PERSON);
+
+		//addObjectPropertyValue(dataSet,personName,EMAIL,person.getEmail());
+		//addDatatypePropertyValue(dataSet,personName,NAME,person.getName());
+		//addObjectPropertyValue(dataSet,personName,LOCATION,person.getLocation());
+		//addObjectPropertyValue(dataSet,personName,WORKPLACE_HOMEPAGE,person.getWorkplaceHomepage());
+
+		return dataSet;
+
+		//return PersonMapper.toDataSet(person);
 	}
 
 	@Override
