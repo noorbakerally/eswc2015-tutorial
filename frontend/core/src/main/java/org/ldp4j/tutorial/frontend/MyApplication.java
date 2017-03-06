@@ -35,6 +35,7 @@ import org.ldp4j.application.session.WriteSession;
 import org.ldp4j.application.session.WriteSessionException;
 import org.ldp4j.application.setup.Bootstrap;
 import org.ldp4j.application.setup.Environment;
+import org.ldp4j.tutorial.frontend.busstation.BusStationContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.Parking;
 import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
@@ -54,13 +55,18 @@ public final class MyApplication extends Application<Configuration> {
 	private static final String ROOT_PARKING_CONTAINER_PATH= "parkings/";
 	private Name<String> parkingContainerName;
 
+	//BusStation
+	private static final String BUSSTATION_CONTAINER_NAME     = "BusStationContainer";
+	private static final String ROOT_BUSSTATION_CONTAINER_PATH= "busstations/";
+	private Name<String> busStationContainerName;
+
+
 
 	public MyApplication() {
 
-		this.parkingContainerName=
-			NamingScheme.
-				getDefault().
-					name(PARKING_CONTAINER_NAME);
+		this.parkingContainerName=NamingScheme.getDefault().name(PARKING_CONTAINER_NAME);
+		this.busStationContainerName=NamingScheme.getDefault().name(BUSSTATION_CONTAINER_NAME);
+
 
 	}
 
@@ -68,11 +74,25 @@ public final class MyApplication extends Application<Configuration> {
 	public void setup(Environment environment, Bootstrap<Configuration> bootstrap) {
 		LOGGER.info("Starting Application configuration...");
 
+		//####Handlers Definition########
+
+		//Parking Handlers
 		bootstrap.addHandler(new ParkingContainerHandler());
 		bootstrap.addHandler(new ParkingHandler());
 
+		//Bus Station Handlers
+		bootstrap.addHandler(new BusStationContainerHandler());
+
+		//#######End of Handler Definition######
+
+
+
+
 		//Parking
 		environment.publishResource(this.parkingContainerName,ParkingContainerHandler.class,ROOT_PARKING_CONTAINER_PATH);
+
+		//BusStation
+		environment.publishResource(this.busStationContainerName,BusStationContainerHandler.class,ROOT_BUSSTATION_CONTAINER_PATH);
 
 
 
