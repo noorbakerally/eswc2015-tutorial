@@ -94,6 +94,19 @@ public class ParkingHandler implements ResourceHandler {
                 String dataTypeURI = qs.getLiteral("?o").getDatatypeURI();
                 addDatatypePropertyValue(dataSet, parkingName, "http://www.w3.org/2003/01/geo/wgs84_pos#long",lexicalValue,dataTypeURI);
             }
+
+            if (predicateURI.equals("http://www.w3.org/2003/01/geo/wgs84_pos#lat")) {
+                String lexicalValue = qs.getLiteral("?o").getLexicalForm();
+                String dataTypeURI = qs.getLiteral("?o").getDatatypeURI();
+                addDatatypePropertyValue(dataSet, parkingName, "http://www.w3.org/2003/01/geo/wgs84_pos#lat",lexicalValue,dataTypeURI);
+            }
+
+            if (predicateURI.equals("http://geovocab.org/geometry#geometry")) {
+                addObjectPropertyValue(dataSet, parkingName, "http://geovocab.org/geometry#geometry", qs.getResource("?o").getURI());
+            }
+            if (predicateURI.equals("http://www.w3.org/2000/01/rdf-schema#")) {
+                addObjectPropertyValue(dataSet, parkingName, "http://www.w3.org/2000/01/rdf-schema#", qs.getResource("?o").getURI());
+            }
         }
         return dataSet;
     }
