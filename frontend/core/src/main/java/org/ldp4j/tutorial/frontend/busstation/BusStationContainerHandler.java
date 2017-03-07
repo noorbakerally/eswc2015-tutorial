@@ -36,7 +36,6 @@ import org.ldp4j.application.ext.annotations.BasicContainer;
 import org.ldp4j.application.session.ContainerSnapshot;
 import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.application.session.WriteSession;
-import org.ldp4j.tutorial.frontend.generic.GenericHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +44,7 @@ import org.slf4j.LoggerFactory;
  */
 @BasicContainer(
         id = BusStationContainerHandler.ID,
-        memberHandler = GenericHandler.class
+        memberHandler = BusStationHandler.class
 )
 public class BusStationContainerHandler implements ContainerHandler {
 

@@ -38,16 +38,11 @@ import org.ldp4j.application.session.WriteSessionException;
 import org.ldp4j.application.setup.Bootstrap;
 import org.ldp4j.application.setup.Environment;
 import org.ldp4j.tutorial.frontend.busstation.BusStationContainerHandler;
-import org.ldp4j.tutorial.frontend.parking.Parking;
 import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
 import org.ldp4j.tutorial.frontend.util.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.ldp4j.application.data.IndividualReferenceBuilder.newReference;
-import java.awt.*;
-import java.net.URI;
-import java.util.Date;
 
 public final class MyApplication extends Application<Configuration> {
 
@@ -110,13 +105,6 @@ public final class MyApplication extends Application<Configuration> {
 			ContainerSnapshot containerParkingSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.parkingContainerName,ParkingContainerHandler.class);
 			ContainerSnapshot containerBusStationSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.busStationContainerName,BusStationContainerHandler.class);
 			
-			/*int i = 0;
-			while (i<4){
-				String resourceName = "test"+i;
-				containerSnapshot.addMember(NamingScheme.getDefault().name(resourceName));
-				i++;
-			}*/
-
 			String parkingQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
 					"PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
 					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
@@ -128,7 +116,7 @@ public final class MyApplication extends Application<Configuration> {
 					"  ?s rdf:type ?o.\n" +
 					"  FILTER (?s in (lgdo:ParkingSpace,lgdo:ParkingMeter,lgdo:BicycleParking,lgdo:MotorcycleParking))\n" +
 					"} ";
-			ResultSet results = DataSource.getElements(parkingQuery);
+			ResultSet results = DataSource.getResources(parkingQuery);
 			while (results.hasNext()){
 				QuerySolution qs = results.next();
 				String resourceURI = qs.getResource("?parking").getURI();
@@ -145,7 +133,7 @@ public final class MyApplication extends Application<Configuration> {
 					"    ?busStation a lgdo:BusStation .\n" +
 					"  }\n" +
 					"} ";
-			results = DataSource.getElements(busStation);
+			results = DataSource.getResources(busStation);
 			while (results.hasNext()){
 				QuerySolution qs = results.next();
 				String resourceURI = qs.getResource("?busStation").getURI();

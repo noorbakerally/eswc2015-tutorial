@@ -24,19 +24,32 @@
  *   Bundle      : frontend-core-1.0.0-SNAPSHOT.jar
  * #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
  */
-package org.ldp4j.tutorial.frontend.parking;
+package org.ldp4j.tutorial.frontend.busstation;
+
+import org.ldp4j.application.data.DataSet;
+import org.ldp4j.application.data.DataSetFactory;
+import org.ldp4j.application.ext.ApplicationRuntimeException;
+import org.ldp4j.application.ext.ResourceHandler;
+import org.ldp4j.application.ext.UnknownResourceException;
+import org.ldp4j.application.ext.annotations.Resource;
+import org.ldp4j.application.session.ResourceSnapshot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Created by bakerally on 3/5/17.
+ * Created by bakerally on 3/2/17.
  */
-public class Parking {
-    String name;
+@Resource(
+        id= BusStationHandler.ID
+)
+public class BusStationHandler implements ResourceHandler {
+    public static final String ID="BusStationHandler";
+    private static final Logger LOGGER= LoggerFactory.getLogger(BusStationHandler.class);
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
+        LOGGER.info("Enters BusStationHandler get ======================"+resource.name().id().toString());
+        DataSet resourceDataSet = DataSetFactory.createDataSet(resource.name());
+        return resourceDataSet;
     }
 }

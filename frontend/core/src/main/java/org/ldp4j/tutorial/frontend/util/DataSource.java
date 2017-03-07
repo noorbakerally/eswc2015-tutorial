@@ -36,10 +36,19 @@ import java.util.List;
  */
 public class DataSource {
 
-    public static ResultSet getElements(String strQuery){
+    public static ResultSet getResources(String strQuery){
         Query query = QueryFactory.create(strQuery); //s2 = the query above
         QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
         ResultSet results = qExe.execSelect();
         return results;
     }
+
+    public static ResultSet getResultDescription(String strQuery){
+        Query query = QueryFactory.create(strQuery); //s2 = the query above
+        QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
+        ResultSet results = qExe.execSelect();
+        return results;
+    }
+
+
 }

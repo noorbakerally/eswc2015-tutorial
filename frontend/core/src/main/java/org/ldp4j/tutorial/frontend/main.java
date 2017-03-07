@@ -27,6 +27,8 @@
 package org.ldp4j.tutorial.frontend;
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 import org.ldp4j.application.data.Name;
 import org.ldp4j.application.data.NamingScheme;
 
@@ -42,21 +44,20 @@ public class main {
                     "PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
                     "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                     "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                    "SELECT distinct ?parking {\n" +
+                    "SELECT ?p ?o {\n" +
                     "  GRAPH <http://opensensingcity.emse.fr/OSM/strasbourg> {\n" +
-                    "    ?parking a ?s .\n" +
+                    "    <http://linkedgeodata.org/triplify/node1933697197> ?p ?o .\n" +
                     "  }\n" +
-                    "  ?s rdf:type ?o.\n" +
-                    "  FILTER (?s in (lgdo:ParkingSpace,lgdo:ParkingMeter,lgdo:BicycleParking,lgdo:MotorcycleParking))\n" +
-                    "} LIMIT 2";
+                    "} ";
 
             Query query = QueryFactory.create(s2); //s2 = the query above
             QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
             ResultSet results = qExe.execSelect();
             while (results.hasNext()){
                 QuerySolution qs = results.next();
-                String resourceURI = qs.getResource("?parking").getURI();
-                System.out.println(resourceURI);
+                String predicateURI = qs.getResource("?p").getURI();
+                RDFNode object = qs.get("?o");
+                System.out.println(predicateURI + "------------"+object);
             }
     }
 }

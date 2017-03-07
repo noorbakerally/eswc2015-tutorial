@@ -60,10 +60,7 @@ public class ParkingContainerHandler implements ContainerHandler {
     @Override
     public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
         LOGGER.info("Enters ParkingContainerHandler get======================"+resource.name()+" test");
-
-        return
-                DataSetFactory.
-                        createDataSet(resource.name());
+        return DataSetFactory.createDataSet(resource.name());
     }
 
     @Override

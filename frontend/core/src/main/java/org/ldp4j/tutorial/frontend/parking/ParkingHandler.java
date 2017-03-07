@@ -48,7 +48,7 @@ public class ParkingHandler implements ResourceHandler {
 
     @Override
     public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
-        LOGGER.info("Enters ParkingHandler get ======================"+resource);
+        LOGGER.info("Enters ParkingHandler get ======================"+resource.name().id().toString());
 
         DataSet resourceDataSet = DataSetFactory.createDataSet(resource.name());
         return resourceDataSet;
