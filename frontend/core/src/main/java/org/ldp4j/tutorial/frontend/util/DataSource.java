@@ -27,6 +27,7 @@
 package org.ldp4j.tutorial.frontend.util;
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +44,25 @@ public class DataSource {
         return results;
     }
 
-    public static ResultSet getResultDescription(String strQuery){
+    public static ResultSet getResourceDescription(String strResourceIRI){
+
+        String strQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                "SELECT ?p ?o {\n" +
+                "  GRAPH <http://opensensingcity.emse.fr/OSM/strasbourg> {\n" +
+                "    <"+strResourceIRI+"> ?p ?o .\n" +
+                "  }\n" +
+                "} ";
+
         Query query = QueryFactory.create(strQuery); //s2 = the query above
         QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
         ResultSet results = qExe.execSelect();
         return results;
     }
+
+
 
 
 }
