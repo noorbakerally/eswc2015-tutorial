@@ -26,8 +26,9 @@
  */
 package org.ldp4j.tutorial.frontend.busstation;
 
+import org.ldp4j.application.data.DataDSL;
 import org.ldp4j.application.data.DataSet;
-import org.ldp4j.application.data.DataSetFactory;
+import org.ldp4j.application.data.DataSets;
 import org.ldp4j.application.ext.ApplicationRuntimeException;
 import org.ldp4j.application.ext.ContainerHandler;
 import org.ldp4j.application.ext.UnknownResourceException;
@@ -57,7 +58,7 @@ public class BusStationContainerHandler implements ContainerHandler {
         LOGGER.info("Enters BusStationContainerHandler get======================"+resource.name()+" test");
 
         return
-                DataSetFactory.
+                DataSets.
                         createDataSet(resource.name());
     }
 

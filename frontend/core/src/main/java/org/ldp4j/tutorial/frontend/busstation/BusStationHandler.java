@@ -63,10 +63,10 @@ public class BusStationHandler implements ResourceHandler {
         individual.addValue(propertyId,external);
     }
     private static void addDatatypePropertyValue(DataSet dataSet, Name<String> name, String propertyURI, Object rawValue,String dataTypeURI) {
-        TypedLiteral<Object> datatype = DataSetUtils.newTypedLiteral(rawValue, URI.create(dataTypeURI));
+
         ManagedIndividualId individualId = ManagedIndividualId.createId(name, BusStationHandler.ID);
         ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
-        individual.addValue(URI.create(propertyURI),datatype);
+        individual.addValue(URI.create(propertyURI),Literals.newTypedLiteral(rawValue, URI.create(dataTypeURI)));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class BusStationHandler implements ResourceHandler {
         LOGGER.info("Enters ParkingHandler get ======================"+resource.name().id().toString());
 
         Name<String> parkingName = NamingScheme.getDefault().name(resource.name().id().toString());
-        DataSet dataSet = DataSetFactory.createDataSet(resource.name());
+        DataSet dataSet = DataSets.createDataSet(resource.name());
 
         String resourceIRI = resource.name().id().toString();
         ResultSet results = DataSource.getResourceDescription(resourceIRI);

@@ -59,7 +59,7 @@
 	<!-- =================================================================== -->
 
 	<properties>
-		<ldp4j.version>1.0.0-SNAPSHOT</ldp4j.version>
+		<ldp4j.version>0.2.1</ldp4j.version>
 		<frontend.http.port>80</frontend.http.port>
 	</properties>
 
