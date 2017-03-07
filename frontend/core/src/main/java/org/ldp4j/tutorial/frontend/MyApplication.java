@@ -26,6 +26,8 @@
  */
 package org.ldp4j.tutorial.frontend;
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import org.ldp4j.application.data.*;
 import org.ldp4j.application.ext.Application;
 import org.ldp4j.application.ext.Configuration;
@@ -39,6 +41,7 @@ import org.ldp4j.tutorial.frontend.busstation.BusStationContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.Parking;
 import org.ldp4j.tutorial.frontend.parking.ParkingContainerHandler;
 import org.ldp4j.tutorial.frontend.parking.ParkingHandler;
+import org.ldp4j.tutorial.frontend.util.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static org.ldp4j.application.data.IndividualReferenceBuilder.newReference;
@@ -104,18 +107,51 @@ public final class MyApplication extends Application<Configuration> {
 		LOGGER.info("Initializing Application...");
 		try {
 
+			ContainerSnapshot containerParkingSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.parkingContainerName,ParkingContainerHandler.class);
+			ContainerSnapshot containerBusStationSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.busStationContainerName,BusStationContainerHandler.class);
+			
+			/*int i = 0;
+			while (i<4){
+				String resourceName = "test"+i;
+				containerSnapshot.addMember(NamingScheme.getDefault().name(resourceName));
+				i++;
+			}*/
 
-			Parking p1 = new Parking();
-			Name <String> parkingName = NamingScheme.getDefault().name(p1.getName());
-			p1.setName("newParking");
+			String parkingQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+					"PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+					"PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+					"SELECT distinct ?parking {\n" +
+					"  GRAPH <http://opensensingcity.emse.fr/OSM/strasbourg> {\n" +
+					"    ?parking a ?s .\n" +
+					"  }\n" +
+					"  ?s rdf:type ?o.\n" +
+					"  FILTER (?s in (lgdo:ParkingSpace,lgdo:ParkingMeter,lgdo:BicycleParking,lgdo:MotorcycleParking))\n" +
+					"} ";
+			ResultSet results = DataSource.getElements(parkingQuery);
+			while (results.hasNext()){
+				QuerySolution qs = results.next();
+				String resourceURI = qs.getResource("?parking").getURI();
+				Name <String> resourceName = NamingScheme.getDefault().name(resourceURI);
+				containerParkingSnapshot.addMember(resourceName);
+			}
 
-			ContainerSnapshot containerSnapshot = (ContainerSnapshot)session.find(ResourceSnapshot.class, this.parkingContainerName,ParkingContainerHandler.class);
-			ResourceSnapshot parkingSnapshot = containerSnapshot.addMember(parkingName);
-
-
-
-
-
+			String busStation = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+					"PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+					"PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+					"SELECT distinct ?busStation {\n" +
+					"  GRAPH <http://opensensingcity.emse.fr/OSM/strasbourg> {\n" +
+					"    ?busStation a lgdo:BusStation .\n" +
+					"  }\n" +
+					"} ";
+			results = DataSource.getElements(busStation);
+			while (results.hasNext()){
+				QuerySolution qs = results.next();
+				String resourceURI = qs.getResource("?busStation").getURI();
+				Name <String> resourceName = NamingScheme.getDefault().name(resourceURI);
+				containerBusStationSnapshot.addMember(resourceName);
+			}
 
 
 

@@ -26,15 +26,37 @@
  */
 package org.ldp4j.tutorial.frontend;
 
+import com.hp.hpl.jena.query.*;
+import org.ldp4j.application.data.Name;
 import org.ldp4j.application.data.NamingScheme;
 
-import javax.xml.namespace.QName;
 
 /**
  * Created by bakerally on 3/4/17.
  */
 public class main {
     public static void main(String args[]){
+        
 
+            String s2 = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                    "PREFIX lgdo: <http://linkedgeodata.org/ontology/>\n" +
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                    "SELECT distinct ?parking {\n" +
+                    "  GRAPH <http://opensensingcity.emse.fr/OSM/strasbourg> {\n" +
+                    "    ?parking a ?s .\n" +
+                    "  }\n" +
+                    "  ?s rdf:type ?o.\n" +
+                    "  FILTER (?s in (lgdo:ParkingSpace,lgdo:ParkingMeter,lgdo:BicycleParking,lgdo:MotorcycleParking))\n" +
+                    "} LIMIT 2";
+
+            Query query = QueryFactory.create(s2); //s2 = the query above
+            QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
+            ResultSet results = qExe.execSelect();
+            while (results.hasNext()){
+                QuerySolution qs = results.next();
+                String resourceURI = qs.getResource("?parking").getURI();
+                System.out.println(resourceURI);
+            }
     }
 }
