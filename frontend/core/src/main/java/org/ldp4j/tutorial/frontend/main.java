@@ -27,6 +27,7 @@
 package org.ldp4j.tutorial.frontend;
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.ldp4j.application.data.Name;
@@ -63,8 +64,13 @@ public class main {
         while (results.hasNext()){
             QuerySolution qs = results.next();
             String predicateURI = qs.getResource("?p").getURI();
-            if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){
+           /* if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){
                 System.out.println(qs.getResource("?o").getURI());
+            }*/
+            if (predicateURI.equals("http://www.w3.org/2003/01/geo/wgs84_pos#long")) {
+                Literal longitude = qs.getLiteral("?o");
+                System.out.println(qs.getLiteral("?o").getLexicalForm());
+                System.out.println(longitude.getDatatypeURI());
             }
             //RDFNode object = qs.get("?o");
             //System.out.println(predicateURI + "------------"+object);

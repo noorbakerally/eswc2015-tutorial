@@ -72,6 +72,8 @@ public final class MyApplication extends Application<Configuration> {
 	public void setup(Environment environment, Bootstrap<Configuration> bootstrap) {
 		LOGGER.info("Starting Application configuration...");
 
+
+
 		//####Handlers Definition########
 
 		//Parking Handlers

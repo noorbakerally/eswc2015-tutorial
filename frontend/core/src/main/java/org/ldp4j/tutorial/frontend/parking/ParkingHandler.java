@@ -26,6 +26,7 @@
  */
 package org.ldp4j.tutorial.frontend.parking;
 
+import com.hp.hpl.jena.query.DatasetFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -34,6 +35,7 @@ import org.ldp4j.application.ext.ApplicationRuntimeException;
 import org.ldp4j.application.ext.ResourceHandler;
 import org.ldp4j.application.ext.UnknownResourceException;
 import org.ldp4j.application.ext.annotations.Resource;
+
 import org.ldp4j.application.session.ResourceSnapshot;
 import org.ldp4j.tutorial.frontend.util.DataSource;
 import org.slf4j.Logger;
@@ -62,12 +64,11 @@ public class ParkingHandler implements ResourceHandler {
         ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
         individual.addValue(propertyId,external);
     }
-    private static void addDatatypePropertyValue(DataSet dataSet, Name<String> name, String propertyURI, Object rawValue) {
-        DataSetUtils.
-                newHelper(dataSet).
-                managedIndividual(name, ParkingHandler.ID).
-                property(propertyURI).
-                withLiteral(rawValue);
+    private static void addDatatypePropertyValue(DataSet dataSet, Name<String> name, String propertyURI, Object rawValue,String dataTypeURI) {
+        TypedLiteral<Object> datatype = DataSetUtils.newTypedLiteral(rawValue, URI.create(dataTypeURI));
+        ManagedIndividualId individualId = ManagedIndividualId.createId(name, ParkingHandler.ID);
+        ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
+        individual.addValue(URI.create(propertyURI),datatype);
     }
 
     @Override
@@ -83,8 +84,15 @@ public class ParkingHandler implements ResourceHandler {
         while (results.hasNext()){
             QuerySolution qs = results.next();
             String predicateURI = qs.getResource("?p").getURI();
+
             if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
                 addObjectPropertyValue(dataSet, parkingName, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", qs.getResource("?o").getURI());
+            }
+
+            if (predicateURI.equals("http://www.w3.org/2003/01/geo/wgs84_pos#long")) {
+                String lexicalValue = qs.getLiteral("?o").getLexicalForm();
+                String dataTypeURI = qs.getLiteral("?o").getDatatypeURI();
+                addDatatypePropertyValue(dataSet, parkingName, "http://www.w3.org/2003/01/geo/wgs84_pos#long",lexicalValue,dataTypeURI);
             }
         }
         return dataSet;
