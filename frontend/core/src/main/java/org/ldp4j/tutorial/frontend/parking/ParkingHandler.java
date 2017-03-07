@@ -26,15 +26,20 @@
  */
 package org.ldp4j.tutorial.frontend.parking;
 
-import org.ldp4j.application.data.DataSet;
-import org.ldp4j.application.data.DataSetFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import org.ldp4j.application.data.*;
 import org.ldp4j.application.ext.ApplicationRuntimeException;
 import org.ldp4j.application.ext.ResourceHandler;
 import org.ldp4j.application.ext.UnknownResourceException;
 import org.ldp4j.application.ext.annotations.Resource;
 import org.ldp4j.application.session.ResourceSnapshot;
+import org.ldp4j.tutorial.frontend.util.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.URI;
 
 /**
  * Created by bakerally on 3/2/17.
@@ -46,11 +51,42 @@ public class ParkingHandler implements ResourceHandler {
     public static final String ID="ParkingHandler";
     private static final Logger LOGGER= LoggerFactory.getLogger(ParkingHandler.class);
 
+
+    private static void addObjectPropertyValue(DataSet dataSet, Name<String> name, String propertyURI, String uri) {
+        if(uri==null) {
+            return;
+        }
+        ManagedIndividualId individualId = ManagedIndividualId.createId(name, ParkingHandler.ID);
+        ManagedIndividual individual = dataSet.individual(individualId, ManagedIndividual.class);
+        URI propertyId = URI.create(propertyURI);
+        ExternalIndividual external = dataSet.individual(URI.create(uri),ExternalIndividual.class);
+        individual.addValue(propertyId,external);
+    }
+    private static void addDatatypePropertyValue(DataSet dataSet, Name<String> name, String propertyURI, Object rawValue) {
+        DataSetUtils.
+                newHelper(dataSet).
+                managedIndividual(name, ParkingHandler.ID).
+                property(propertyURI).
+                withLiteral(rawValue);
+    }
+
     @Override
     public DataSet get(ResourceSnapshot resource) throws UnknownResourceException, ApplicationRuntimeException {
         LOGGER.info("Enters ParkingHandler get ======================"+resource.name().id().toString());
 
-        DataSet resourceDataSet = DataSetFactory.createDataSet(resource.name());
-        return resourceDataSet;
+        Name<String> parkingName = NamingScheme.getDefault().name(resource.name().id().toString());
+        DataSet dataSet = DataSetFactory.createDataSet(resource.name());
+
+        String resourceIRI = resource.name().id().toString();
+        ResultSet results = DataSource.getResourceDescription(resourceIRI);
+
+        while (results.hasNext()){
+            QuerySolution qs = results.next();
+            String predicateURI = qs.getResource("?p").getURI();
+            if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+                addObjectPropertyValue(dataSet, parkingName, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", qs.getResource("?o").getURI());
+            }
+        }
+        return dataSet;
     }
 }

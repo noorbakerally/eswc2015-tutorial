@@ -53,11 +53,23 @@ public class main {
             Query query = QueryFactory.create(s2); //s2 = the query above
             QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://localhost:3030/OSM/sparql", query );
             ResultSet results = qExe.execSelect();
-            while (results.hasNext()){
+           /* while (results.hasNext()){
                 QuerySolution qs = results.next();
                 String predicateURI = qs.getResource("?p").getURI();
                 RDFNode object = qs.get("?o");
                 System.out.println(predicateURI + "------------"+object);
+            }*/
+
+        while (results.hasNext()){
+            QuerySolution qs = results.next();
+            String predicateURI = qs.getResource("?p").getURI();
+            if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")){
+                System.out.println(qs.getResource("?o").getURI());
             }
+            //RDFNode object = qs.get("?o");
+            //System.out.println(predicateURI + "------------"+object);
+        }
+
+
     }
 }
